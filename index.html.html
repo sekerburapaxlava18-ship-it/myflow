@@ -1,0 +1,4989 @@
+<meta name='viewport' content='width=device-width, initial-scale=1'/><!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#070a12">
+
+<title>MyFlow</title>
+
+<style>
+:root{
+    --bg:#070a12;
+    --card:#101727;
+    --card2:#0b1120;
+    --border:#222d45;
+    --text:#f5f7ff;
+    --muted:#7e8aa3;
+    --primary:#6d7cff;
+    --purple:#996cff;
+    --green:#55dd98;
+    --red:#ff647d;
+    --yellow:#ffd166;
+}
+
+*{
+    box-sizing:border-box;
+    -webkit-tap-highlight-color:transparent;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    margin:0;
+    min-height:100vh;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+    color:var(--text);
+
+    background:
+        radial-gradient(circle at 10% 0%,rgba(91,103,255,.18),transparent 30%),
+        radial-gradient(circle at 100% 40%,rgba(153,108,255,.12),transparent 35%),
+        var(--bg);
+}
+
+button,input,textarea{
+    font:inherit;
+}
+
+button{
+    cursor:pointer;
+}
+
+.container{
+    width:min(1050px,calc(100% - 26px));
+    margin:auto;
+}
+
+/* ================= HEADER ================= */
+
+.topbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:12px;
+    padding:20px 0 12px;
+}
+
+.brand{
+    display:flex;
+    align-items:center;
+    gap:11px;
+}
+
+.logo{
+    width:50px;
+    height:50px;
+    display:grid;
+    place-items:center;
+    border-radius:16px;
+    font-size:24px;
+    background:linear-gradient(135deg,#6578ff,#996cff);
+    box-shadow:0 12px 35px rgba(100,108,255,.25);
+}
+
+.brand h1{
+    margin:0;
+    font-size:22px;
+}
+
+.brand p{
+    margin:3px 0 0;
+    color:var(--muted);
+    font-size:10px;
+}
+
+.admin-buttons{
+    display:flex;
+    gap:6px;
+    align-items:center;
+}
+
+.admin-btn{
+    padding:10px 13px;
+    border:1px solid var(--border);
+    border-radius:13px;
+    background:#101727;
+    color:#aab4c8;
+    font-size:10px;
+}
+
+.admin-btn.active{
+    color:white;
+    border-color:#626fd2;
+    background:linear-gradient(
+        135deg,
+        rgba(101,120,255,.25),
+        rgba(153,108,255,.2)
+    );
+}
+
+.logout-top{
+    display:none;
+    padding:10px 12px;
+    border:1px solid rgba(255,100,125,.25);
+    border-radius:13px;
+    background:rgba(255,100,125,.08);
+    color:#ff8195;
+    font-size:10px;
+}
+
+.logout-top.show{
+    display:block;
+}
+
+/* ================= TABS ================= */
+
+.main-switch{
+    position:sticky;
+    top:8px;
+    z-index:50;
+
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:5px;
+
+    margin:8px 0 16px;
+    padding:5px;
+
+    border:1px solid var(--border);
+    border-radius:18px;
+
+    background:rgba(10,15,26,.90);
+    backdrop-filter:blur(16px);
+}
+
+.main-tab{
+    padding:13px 10px;
+    border:0;
+    border-radius:13px;
+    background:transparent;
+    color:#748098;
+    font-size:12px;
+    font-weight:700;
+}
+
+.main-tab.active{
+    color:white;
+    background:linear-gradient(135deg,#586cff,#9368ef);
+    box-shadow:0 7px 22px rgba(93,105,255,.2);
+}
+
+.page{
+    display:none;
+    animation:fade .22s ease;
+}
+
+.page.active{
+    display:block;
+}
+
+@keyframes fade{
+    from{
+        opacity:0;
+        transform:translateY(5px);
+    }
+    to{
+        opacity:1;
+        transform:none;
+    }
+}
+
+/* ================= HERO ================= */
+
+.hero{
+    position:relative;
+    overflow:hidden;
+    padding:22px;
+    border:1px solid var(--border);
+    border-radius:25px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(18,25,43,.97),
+            rgba(10,15,27,.97)
+        );
+}
+
+.hero::after{
+    content:"";
+    position:absolute;
+    width:170px;
+    height:170px;
+    right:-70px;
+    top:-90px;
+    border-radius:50%;
+    background:#7d6cff;
+    filter:blur(65px);
+    opacity:.25;
+}
+
+.hero.diary::after{
+    background:#c46cff;
+}
+
+.hero-badge{
+    position:relative;
+    z-index:1;
+    display:inline-flex;
+    padding:6px 9px;
+    border-radius:30px;
+    background:rgba(84,221,152,.08);
+    color:#69e5a6;
+    font-size:8px;
+    font-weight:700;
+}
+
+.hero.diary .hero-badge{
+    color:#d8a9ff;
+    background:rgba(192,108,255,.08);
+}
+
+.hero h2{
+    position:relative;
+    z-index:1;
+    margin:14px 0 7px;
+    font-size:25px;
+}
+
+.hero p{
+    position:relative;
+    z-index:1;
+    margin:0;
+    max-width:650px;
+    color:var(--muted);
+    font-size:11px;
+    line-height:1.6;
+}
+
+/* ================= COMMON ================= */
+
+.heading{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin:27px 2px 12px;
+}
+
+.heading h2{
+    margin:0;
+    font-size:18px;
+}
+
+.heading span{
+    color:var(--muted);
+    font-size:9px;
+}
+
+.section-title{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin:24px 2px 10px;
+}
+
+.section-title h3{
+    margin:0;
+    font-size:14px;
+}
+
+.section-title span{
+    color:#69758c;
+    font-size:8px;
+}
+
+.primary{
+    width:100%;
+    padding:14px;
+    border:0;
+    border-radius:14px;
+    color:white;
+    font-weight:750;
+    background:linear-gradient(135deg,#6477ff,#976cff);
+    box-shadow:0 10px 30px rgba(100,110,255,.15);
+}
+
+.secondary{
+    width:100%;
+    padding:12px;
+    border:1px solid var(--border);
+    border-radius:13px;
+    background:#11192a;
+    color:#9ba6ba;
+}
+
+label{
+    display:block;
+    margin:0 0 6px 2px;
+    color:#8793aa;
+    font-size:9px;
+}
+
+input,
+textarea{
+    width:100%;
+    padding:13px;
+    outline:none;
+    border:1px solid var(--border);
+    border-radius:13px;
+    background:#080e1a;
+    color:white;
+}
+
+textarea{
+    min-height:90px;
+    resize:vertical;
+}
+
+.form-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:11px;
+}
+
+.full{
+    grid-column:1/-1;
+}
+
+/* ================= STUDY STATS ================= */
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:9px;
+    margin-top:11px;
+}
+
+.stat{
+    padding:15px;
+    border:1px solid var(--border);
+    border-radius:18px;
+    background:linear-gradient(145deg,#11192a,#0b101d);
+}
+
+.stat span{
+    display:block;
+    margin-top:8px;
+    color:var(--muted);
+    font-size:8px;
+}
+
+.stat strong{
+    display:block;
+    margin-top:4px;
+    font-size:22px;
+}
+
+/* ================= SUBJECTS ================= */
+
+.subjects{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:9px;
+}
+
+.subject{
+    padding:15px;
+    border:1px solid var(--border);
+    border-radius:18px;
+    background:linear-gradient(145deg,#11192a,#0b101d);
+    cursor:pointer;
+}
+
+.subject-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:10px;
+}
+
+.subject-left{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.subject-icon{
+    width:39px;
+    height:39px;
+    display:grid;
+    place-items:center;
+    border-radius:12px;
+    background:#192137;
+}
+
+.subject-name{
+    font-size:12px;
+    font-weight:650;
+}
+
+.subject-count{
+    margin-top:3px;
+    color:var(--muted);
+    font-size:8px;
+}
+
+.subject-score{
+    font-size:19px;
+    font-weight:750;
+}
+
+.track{
+    height:6px;
+    margin-top:13px;
+    overflow:hidden;
+    border-radius:20px;
+    background:#222c41;
+}
+
+.fill{
+    height:100%;
+    border-radius:inherit;
+    background:linear-gradient(90deg,#687aff,#9d6dff);
+}
+
+/* ================= FILTERS ================= */
+
+.filters{
+    display:flex;
+    gap:6px;
+    overflow-x:auto;
+    padding-bottom:4px;
+    scrollbar-width:none;
+}
+
+.filters::-webkit-scrollbar{
+    display:none;
+}
+
+.filter{
+    flex:none;
+    padding:9px 12px;
+    border:1px solid var(--border);
+    border-radius:30px;
+    background:#0e1423;
+    color:#8490a5;
+    font-size:9px;
+}
+
+.filter.active{
+    color:white;
+    border-color:#5864c6;
+    background:
+        linear-gradient(
+            135deg,
+            rgba(105,120,255,.24),
+            rgba(151,103,255,.18)
+        );
+}
+
+/* ================= HISTORY ================= */
+
+.history{
+    overflow:hidden;
+    margin-top:10px;
+    border:1px solid var(--border);
+    border-radius:20px;
+    background:#0d1321;
+}
+
+.history-item,
+.diary-entry{
+    padding:15px;
+    border-bottom:1px solid var(--border);
+    cursor:pointer;
+}
+
+.history-item:last-child,
+.diary-entry:last-child{
+    border-bottom:0;
+}
+
+.history-top,
+.diary-entry-top{
+    display:flex;
+    justify-content:space-between;
+    gap:10px;
+}
+
+.history-name,
+.diary-date{
+    font-size:12px;
+    font-weight:650;
+}
+
+.history-date{
+    margin-top:4px;
+    color:var(--muted);
+    font-size:8px;
+}
+
+.history-score{
+    font-size:18px;
+    font-weight:750;
+}
+
+.preview{
+    margin-top:9px;
+    color:#8c98ad;
+    font-size:9px;
+    line-height:1.6;
+}
+
+.empty{
+    padding:30px 18px;
+    text-align:center;
+    color:var(--muted);
+    font-size:10px;
+}
+
+/* ================= SELECT ================= */
+
+.custom-select{
+    width:100%;
+    min-height:60px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:9px 11px;
+    border:1px solid var(--border);
+    border-radius:15px;
+    background:linear-gradient(145deg,#0f1626,#080e19);
+    color:white;
+    text-align:left;
+}
+
+.select-icon{
+    width:39px;
+    height:39px;
+    flex:none;
+    display:grid;
+    place-items:center;
+    border-radius:12px;
+    background:#182137;
+}
+
+.select-content{
+    flex:1;
+    min-width:0;
+}
+
+.select-content small{
+    display:block;
+    margin-bottom:4px;
+    color:#65728a;
+    font-size:7px;
+    font-weight:700;
+}
+
+.select-content strong{
+    display:block;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+    font-size:11px;
+}
+
+.select-arrow{
+    color:#647087;
+    font-size:18px;
+}
+
+/* ================= ADMIN ================= */
+
+.admin-area{
+    display:none;
+    margin-top:26px;
+    padding:18px;
+    border:1px solid rgba(109,122,255,.35);
+    border-radius:23px;
+    background:linear-gradient(145deg,#121a2d,#0a101d);
+}
+
+.admin-area.show{
+    display:block;
+}
+
+.admin-state{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:17px;
+    padding:10px 12px;
+    border-radius:13px;
+    background:rgba(82,220,149,.06);
+    color:#74e5aa;
+    font-size:9px;
+}
+
+/* ================= DIARY DASHBOARD ================= */
+
+.diary-overview{
+    margin-top:13px;
+}
+
+.state-dashboard{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:8px;
+}
+
+.state-card{
+    position:relative;
+    overflow:hidden;
+    min-height:102px;
+    padding:14px;
+
+    border:1px solid var(--border);
+    border-radius:18px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #101829,
+            #0a101d
+        );
+}
+
+.state-card::after{
+    content:"";
+    position:absolute;
+    width:60px;
+    height:60px;
+    right:-25px;
+    bottom:-25px;
+    border-radius:50%;
+    background:#776cff;
+    filter:blur(25px);
+    opacity:.12;
+}
+
+.state-card-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap:8px;
+}
+
+.state-card-icon{
+    width:35px;
+    height:35px;
+    display:grid;
+    place-items:center;
+    border-radius:11px;
+    background:#182137;
+    font-size:17px;
+}
+
+.state-card-value{
+    font-size:18px;
+    font-weight:800;
+}
+
+.state-card-name{
+    margin-top:11px;
+    color:#a7b0c1;
+    font-size:9px;
+    line-height:1.3;
+}
+
+.state-mini-track{
+    height:4px;
+    margin-top:8px;
+    overflow:hidden;
+    border-radius:10px;
+    background:#202a3f;
+}
+
+.state-mini-fill{
+    height:100%;
+    border-radius:inherit;
+    background:linear-gradient(90deg,#697cff,#a36dff);
+}
+
+.no-state{
+    padding:22px 15px;
+    border:1px solid var(--border);
+    border-radius:19px;
+    background:#0d1423;
+    color:#737f95;
+    text-align:center;
+    font-size:10px;
+    line-height:1.7;
+}
+
+.latest-info{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:10px;
+
+    margin-top:10px;
+    padding:12px 13px;
+
+    border:1px solid var(--border);
+    border-radius:15px;
+
+    background:#0d1423;
+
+    color:#7d899f;
+    font-size:9px;
+}
+
+.latest-info strong{
+    color:#c7cedb;
+}
+
+/* ================= SLIDERS ================= */
+
+.state-group{
+    margin-top:18px;
+    padding:15px;
+    border:1px solid var(--border);
+    border-radius:19px;
+    background:rgba(8,14,26,.55);
+}
+
+.state-group-title{
+    margin-bottom:15px;
+}
+
+.state-group-title h3{
+    margin:0;
+    font-size:14px;
+}
+
+.state-group-title p{
+    margin:4px 0 0;
+    color:var(--muted);
+    font-size:8px;
+}
+
+.slider-row{
+    margin-bottom:17px;
+}
+
+.slider-row:last-child{
+    margin-bottom:0;
+}
+
+.slider-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:8px;
+}
+
+.slider-name{
+    color:#c5ccda;
+    font-size:10px;
+}
+
+.slider-value{
+    min-width:44px;
+    padding:4px 7px;
+    text-align:center;
+    border-radius:9px;
+    background:#19223a;
+    color:#cbd2ff;
+    font-size:9px;
+    font-weight:750;
+}
+
+input[type=range]{
+    width:100%;
+    height:6px;
+    padding:0;
+    appearance:none;
+    border:0;
+    border-radius:20px;
+    background:#222d43;
+}
+
+input[type=range]::-webkit-slider-thumb{
+    appearance:none;
+    width:20px;
+    height:20px;
+    border-radius:50%;
+    background:linear-gradient(135deg,#697cff,#a06cff);
+    box-shadow:0 3px 13px rgba(112,105,255,.45);
+}
+
+/* ================= DIARY HISTORY ================= */
+
+.diary-feeling{
+    font-size:19px;
+}
+
+.diary-values{
+    display:flex;
+    flex-wrap:wrap;
+    gap:5px;
+    margin-top:10px;
+}
+
+.chip{
+    padding:5px 7px;
+    border:1px solid #253049;
+    border-radius:20px;
+    background:#11192a;
+    color:#9ca8bb;
+    font-size:8px;
+}
+
+.diary-text-block{
+    margin-top:12px;
+}
+
+/* ================= MODALS ================= */
+
+.overlay{
+    position:fixed;
+    inset:0;
+    z-index:1000;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    padding:15px;
+
+    background:rgba(2,4,9,.86);
+    backdrop-filter:blur(10px);
+
+    opacity:0;
+    visibility:hidden;
+
+    transition:.2s;
+}
+
+.overlay.show{
+    opacity:1;
+    visibility:visible;
+}
+
+.modal{
+    width:100%;
+    max-width:430px;
+    max-height:87vh;
+    overflow:auto;
+
+    padding:18px;
+
+    border:1px solid #28344e;
+    border-radius:24px;
+
+    background:
+        linear-gradient(
+            180deg,
+            #151d31,
+            #0a101d
+        );
+}
+
+.modal h2{
+    margin:0;
+    font-size:18px;
+}
+
+.modal-sub{
+    margin:5px 0 14px;
+    color:var(--muted);
+    font-size:9px;
+}
+
+.modal-actions{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:8px;
+    margin-top:11px;
+}
+
+.modal-actions button{
+    padding:12px;
+    border-radius:12px;
+}
+
+.cancel{
+    border:1px solid var(--border);
+    background:#151d30;
+    color:#aab4c7;
+}
+
+.confirm{
+    border:0;
+    background:linear-gradient(135deg,#6578ff,#976cff);
+    color:white;
+}
+
+.delete{
+    width:100%;
+    margin-top:8px;
+    padding:12px;
+    border:1px solid rgba(255,100,125,.22);
+    border-radius:12px;
+    background:rgba(255,100,125,.08);
+    color:#ff7188;
+}
+
+.error{
+    min-height:15px;
+    margin-top:7px;
+    color:var(--red);
+    font-size:9px;
+}
+
+/* ================= PICKER ================= */
+
+.picker-option{
+    width:100%;
+    display:flex;
+    align-items:center;
+    gap:11px;
+
+    margin-top:7px;
+    min-height:58px;
+    padding:10px 11px;
+
+    border:1px solid #202b42;
+    border-radius:15px;
+
+    background:#10182a;
+    color:#c4ccda;
+    text-align:left;
+}
+
+.picker-icon{
+    width:38px;
+    height:38px;
+    display:grid;
+    place-items:center;
+    flex:none;
+    border-radius:11px;
+    background:#182137;
+}
+
+.picker-title{
+    font-size:12px;
+    font-weight:650;
+}
+
+.picker-sub{
+    margin-top:3px;
+    color:#68758d;
+    font-size:8px;
+}
+
+/* ================= CALENDAR ================= */
+
+.calendar-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:13px;
+}
+
+.cal-nav{
+    width:40px;
+    height:40px;
+    border:1px solid var(--border);
+    border-radius:12px;
+    background:#11192a;
+    color:white;
+    font-size:19px;
+}
+
+.cal-title{
+    text-align:center;
+    font-size:15px;
+    font-weight:700;
+}
+
+.weekdays,
+.calendar-days{
+    display:grid;
+    grid-template-columns:repeat(7,1fr);
+}
+
+.weekdays div{
+    padding:8px 0;
+    text-align:center;
+    color:#657188;
+    font-size:7px;
+}
+
+.calendar-days{
+    gap:4px;
+}
+
+.day{
+    aspect-ratio:1;
+    display:grid;
+    place-items:center;
+    border-radius:10px;
+    color:#b9c2d2;
+    font-size:10px;
+    cursor:pointer;
+}
+
+.day.today{
+    border:1px solid #5261bb;
+}
+
+.day.selected{
+    color:white;
+    background:linear-gradient(135deg,#6378ff,#986bff);
+}
+
+.day.blank{
+    pointer-events:none;
+}
+
+/* ================= DETAILS ================= */
+
+.detail-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:7px;
+    margin-top:13px;
+}
+
+.detail-box{
+    padding:11px;
+    border:1px solid var(--border);
+    border-radius:12px;
+    background:#0a101d;
+}
+
+.detail-box span{
+    color:var(--muted);
+    font-size:7px;
+}
+
+.detail-box strong{
+    display:block;
+    margin-top:4px;
+    font-size:17px;
+}
+
+.detail-text{
+    margin-top:9px;
+    padding:12px;
+    border:1px solid var(--border);
+    border-radius:12px;
+    background:#0a101d;
+    color:#bdc6d5;
+    font-size:10px;
+    line-height:1.6;
+}
+
+.detail-text b{
+    display:block;
+    margin-bottom:5px;
+    color:#8793aa;
+    font-size:8px;
+}
+
+/* ================= TOAST ================= */
+
+.toast{
+    position:fixed;
+    left:50%;
+    bottom:24px;
+    z-index:3000;
+
+    max-width:calc(100% - 28px);
+    padding:11px 14px;
+
+    border:1px solid var(--border);
+    border-radius:13px;
+
+    background:#172034;
+    color:white;
+
+    text-align:center;
+    font-size:10px;
+
+    opacity:0;
+    transform:translate(-50%,20px);
+    transition:.2s;
+
+    pointer-events:none;
+}
+
+.toast.show{
+    opacity:1;
+    transform:translate(-50%,0);
+}
+
+/* ================= MOBILE ================= */
+
+@media(max-width:650px){
+
+    .stats{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .stat:first-child{
+        grid-column:1/-1;
+    }
+
+    .subjects{
+        grid-template-columns:1fr;
+    }
+
+    .form-grid{
+        grid-template-columns:1fr;
+    }
+
+    .full{
+        grid-column:auto;
+    }
+
+    .brand p{
+        max-width:170px;
+    }
+}
+
+@media(max-width:410px){
+
+    .brand h1{
+        font-size:19px;
+    }
+
+    .logo{
+        width:45px;
+        height:45px;
+    }
+
+    .admin-btn,
+    .logout-top{
+        padding:9px;
+        font-size:9px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<!-- HEADER -->
+
+<header class="topbar">
+
+    <div class="brand">
+
+        <div class="logo">
+            ✦
+        </div>
+
+        <div>
+            <h1>MyFlow</h1>
+            <p>Учёба и мой личный дневник</p>
+        </div>
+
+    </div>
+
+    <div class="admin-buttons">
+
+        <button
+            class="admin-btn"
+            id="adminBtn">
+            🔐 Админ
+        </button>
+
+        <button
+            class="logout-top"
+            id="logoutBtn"
+            onclick="logout()">
+            🚪 Выйти
+        </button>
+
+    </div>
+
+</header>
+
+<!-- MAIN TABS -->
+
+<div class="main-switch">
+
+    <button
+        class="main-tab active"
+        id="studyTab"
+        onclick="switchPage('study')">
+        📚 Учёба
+    </button>
+
+    <button
+        class="main-tab"
+        id="diaryTab"
+        onclick="switchPage('diary')">
+        🌙 Мой дневник
+    </button>
+
+</div>
+
+<!-- ====================================================
+     STUDY
+==================================================== -->
+
+<section
+    class="page active"
+    id="studyPage">
+
+    <section class="hero">
+
+        <div class="hero-badge">
+            ● УЧЕБНЫЙ ПРОГРЕСС
+        </div>
+
+        <h2>
+            📚 Моя учёба
+        </h2>
+
+        <p>
+            Предметы, уроки, понимание материала
+            и изменение общего уровня знаний.
+        </p>
+
+    </section>
+
+    <div class="stats">
+
+        <div class="stat">
+            🧠
+            <span>СРЕДНЕЕ ЗНАНИЕ</span>
+            <strong id="avgKnowledge">--</strong>
+        </div>
+
+        <div class="stat">
+            ⭐
+            <span>СРЕДНЯЯ ОЦЕНКА</span>
+            <strong id="avgRating">--</strong>
+        </div>
+
+        <div class="stat">
+            🔥
+            <span>ВСЕГО УРОКОВ</span>
+            <strong id="lessonCount">0</strong>
+        </div>
+
+    </div>
+
+    <div class="heading">
+        <h2>Предметы</h2>
+        <span>текущий уровень</span>
+    </div>
+
+    <div
+        class="subjects"
+        id="subjects">
+    </div>
+
+    <div
+        class="heading"
+        id="studyHistoryHeading">
+
+        <h2>История уроков</h2>
+
+        <span id="studyHistoryCount">
+            0 записей
+        </span>
+
+    </div>
+
+    <div
+        class="filters"
+        id="studyFilters">
+    </div>
+
+    <div
+        class="history"
+        id="studyHistory">
+    </div>
+
+    <!-- STUDY ADMIN -->
+
+    <section
+        class="admin-area"
+        id="studyAdmin">
+
+        <div class="admin-state">
+            <span>🟢 Администратор</span>
+            <span>Добавление урока</span>
+        </div>
+
+        <div
+            class="heading"
+            style="margin-top:0">
+
+            <h2>
+                ✏️ Новый урок
+            </h2>
+
+            <span>
+                результат
+            </span>
+
+        </div>
+
+        <div class="form-grid">
+
+            <div>
+
+                <label>
+                    Дата
+                </label>
+
+                <button
+                    class="custom-select"
+                    onclick="openCalendar('study')">
+
+                    <span class="select-icon">
+                        📅
+                    </span>
+
+                    <span class="select-content">
+
+                        <small>
+                            ДАТА УРОКА
+                        </small>
+
+                        <strong id="studyDateText">
+                        </strong>
+
+                    </span>
+
+                    <span class="select-arrow">
+                        ›
+                    </span>
+
+                </button>
+
+            </div>
+
+            <div>
+
+                <label>
+                    Предмет
+                </label>
+
+                <button
+                    class="custom-select"
+                    onclick="openSubjectPicker()">
+
+                    <span
+                        class="select-icon"
+                        id="studySubjectIcon">
+                        🇦🇿
+                    </span>
+
+                    <span class="select-content">
+
+                        <small>
+                            ПРЕДМЕТ
+                        </small>
+
+                        <strong id="studySubjectText">
+                            Азербайджанский
+                        </strong>
+
+                    </span>
+
+                    <span class="select-arrow">
+                        ›
+                    </span>
+
+                </button>
+
+            </div>
+
+            <div class="full">
+
+                <label>
+                    Тема урока
+                </label>
+
+                <input
+                    id="studyTopic"
+                    placeholder="Например: Квадратные уравнения">
+
+            </div>
+
+            <div>
+
+                <label>
+                    Оценка урока • 0–10
+                </label>
+
+                <input
+                    id="studyRating"
+                    type="number"
+                    min="0"
+                    max="10"
+                    step=".1"
+                    placeholder="8">
+
+            </div>
+
+            <div>
+
+                <label>
+                    Понимание • 0–10
+                </label>
+
+                <input
+                    id="studyUnderstanding"
+                    type="number"
+                    min="0"
+                    max="10"
+                    step=".1"
+                    placeholder="7">
+
+            </div>
+
+            <div class="full">
+
+                <label>
+                    Общее знание предмета • 0–10
+                </label>
+
+                <input
+                    id="studyKnowledge"
+                    type="number"
+                    min="0"
+                    max="10"
+                    step=".1"
+                    placeholder="7">
+
+            </div>
+
+            <div class="full">
+
+                <label>
+                    Как прошёл урок?
+                </label>
+
+                <textarea
+                    id="studyComment"
+                    placeholder="Что получилось? Что было сложно?"></textarea>
+
+            </div>
+
+        </div>
+
+        <button
+            class="primary"
+            style="margin-top:13px"
+            onclick="saveStudy()">
+            💾 Сохранить урок
+        </button>
+
+    </section>
+
+</section>
+
+<!-- ====================================================
+     DIARY
+==================================================== -->
+
+<section
+    class="page"
+    id="diaryPage">
+
+    <section class="hero diary">
+
+        <div class="hero-badge">
+            ● ЛИЧНЫЙ ДНЕВНИК
+        </div>
+
+        <h2>
+            🌙 Как я себя чувствую
+        </h2>
+
+        <p>
+            Мои дни, чувства, мысли, желания
+            и состояние. Не оценка и не диагноз,
+            а моя собственная история.
+        </p>
+
+    </section>
+
+    <!-- CURRENT STATE -->
+
+    <div
+        class="diary-overview"
+        id="diaryOverview">
+    </div>
+
+    <!-- HISTORY -->
+
+    <div
+        class="heading"
+        id="diaryHistoryHeading">
+
+        <h2>
+            Моя история
+        </h2>
+
+        <span id="diaryHistoryLabel">
+            по дням
+        </span>
+
+    </div>
+
+    <div
+        class="history"
+        id="diaryHistory">
+    </div>
+
+    <!-- DIARY ADMIN -->
+
+    <section
+        class="admin-area"
+        id="diaryAdmin">
+
+        <div class="admin-state">
+
+            <span>
+                🟣 Личный дневник
+            </span>
+
+            <span>
+                Новая запись
+            </span>
+
+        </div>
+
+        <div
+            class="heading"
+            style="margin-top:0">
+
+            <h2>
+                🌙 Запись дня
+            </h2>
+
+            <span>
+                моё состояние
+            </span>
+
+        </div>
+
+        <label>
+            Дата
+        </label>
+
+        <button
+            class="custom-select"
+            onclick="openCalendar('diary')">
+
+            <span class="select-icon">
+                📅
+            </span>
+
+            <span class="select-content">
+
+                <small>
+                    ДАТА ЗАПИСИ
+                </small>
+
+                <strong id="diaryDateText">
+                </strong>
+
+            </span>
+
+            <span class="select-arrow">
+                ›
+            </span>
+
+        </button>
+
+        <div class="diary-text-block">
+
+            <label>
+                🌙 Как прошёл мой день?
+            </label>
+
+            <textarea
+                id="dayText"
+                placeholder="Расскажи всё как есть..."></textarea>
+
+        </div>
+
+        <!-- EMOTIONS -->
+
+        <div class="state-group">
+
+            <div class="state-group-title">
+
+                <h3>
+                    🫀 Эмоции и состояние
+                </h3>
+
+                <p>
+                    0 -- совсем нет • 10 -- очень сильно
+                </p>
+
+            </div>
+
+            <div id="diaryMainStates">
+            </div>
+
+        </div>
+
+        <!-- NEEDS -->
+
+        <div class="state-group">
+
+            <div class="state-group-title">
+
+                <h3>
+                    ❤️ Чего мне хочется
+                </h3>
+
+                <p>
+                    Что мне сейчас нужно или хочется
+                </p>
+
+            </div>
+
+            <div id="diaryNeeds">
+            </div>
+
+        </div>
+
+        <!-- PHYSICAL -->
+
+        <div class="state-group">
+
+            <div class="state-group-title">
+
+                <h3>
+                    🧍 Физическое состояние
+                </h3>
+
+                <p>
+                    Как чувствует себя тело
+                </p>
+
+            </div>
+
+            <div id="diaryPhysical">
+            </div>
+
+        </div>
+
+        <div class="diary-text-block">
+
+            <label>
+                💭 Что сейчас у меня в голове?
+            </label>
+
+            <textarea
+                id="thoughts"
+                placeholder="Мысли, переживания, идеи..."></textarea>
+
+        </div>
+
+        <div class="diary-text-block">
+
+            <label>
+                ❤️ Что сегодня понравилось?
+            </label>
+
+            <textarea
+                id="liked"
+                placeholder="Что было хорошего?"></textarea>
+
+        </div>
+
+        <div class="diary-text-block">
+
+            <label>
+                💢 Что сегодня расстроило?
+            </label>
+
+            <textarea
+                id="upset"
+                placeholder="Что было неприятно или тяжело?"></textarea>
+
+        </div>
+
+        <div class="diary-text-block">
+
+            <label>
+                🏆 Чем я сегодня доволен?
+            </label>
+
+            <textarea
+                id="proud"
+                placeholder="Что получилось?"></textarea>
+
+        </div>
+
+        <div class="diary-text-block">
+
+            <label>
+                📝 Свободная запись
+            </label>
+
+            <textarea
+                id="freeText"
+                placeholder="Здесь можно написать вообще что угодно..."></textarea>
+
+        </div>
+
+        <button
+            class="primary"
+            style="margin-top:13px"
+            onclick="saveDiary()">
+            🌙 Сохранить день
+        </button>
+
+    </section>
+
+</section>
+
+<div style="
+    padding:40px 0;
+    text-align:center;
+    color:#404b60;
+    font-size:8px;
+">
+    MyFlow • Учёба и личный дневник
+</div>
+
+</div>
+
+<!-- LOGIN -->
+
+<div
+    class="overlay"
+    id="loginOverlay">
+
+    <div class="modal">
+
+        <h2>
+            🔐 Админ-панель
+        </h2>
+
+        <div class="modal-sub">
+            Введите пароль
+        </div>
+
+        <input
+            id="passwordInput"
+            type="password"
+            placeholder="Пароль">
+
+        <div
+            class="error"
+            id="loginError">
+        </div>
+
+        <div class="modal-actions">
+
+            <button
+                class="cancel"
+                onclick="closeOverlay('loginOverlay')">
+                Отмена
+            </button>
+
+            <button
+                class="confirm"
+                onclick="login()">
+                Войти
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- PICKER -->
+
+<div
+    class="overlay"
+    id="pickerOverlay">
+
+    <div class="modal">
+
+        <h2 id="pickerHeading">
+            Выбери
+        </h2>
+
+        <div
+            class="modal-sub"
+            id="pickerSubtitle">
+        </div>
+
+        <div id="pickerContent">
+        </div>
+
+        <button
+            class="secondary"
+            style="margin-top:10px"
+            onclick="closeOverlay('pickerOverlay')">
+            Закрыть
+        </button>
+
+    </div>
+
+</div>
+
+<!-- CALENDAR -->
+
+<div
+    class="overlay"
+    id="calendarOverlay">
+
+    <div class="modal">
+
+        <div class="calendar-head">
+
+            <button
+                class="cal-nav"
+                onclick="moveMonth(-1)">
+                ‹
+            </button>
+
+            <div
+                class="cal-title"
+                id="calendarTitle">
+            </div>
+
+            <button
+                class="cal-nav"
+                onclick="moveMonth(1)">
+                ›
+            </button>
+
+        </div>
+
+        <div class="weekdays">
+
+            <div>ПН</div>
+            <div>ВТ</div>
+            <div>СР</div>
+            <div>ЧТ</div>
+            <div>ПТ</div>
+            <div>СБ</div>
+            <div>ВС</div>
+
+        </div>
+
+        <div
+            class="calendar-days"
+            id="calendarDays">
+        </div>
+
+        <button
+            class="primary"
+            style="margin-top:12px"
+            onclick="closeOverlay('calendarOverlay')">
+            Готово
+        </button>
+
+    </div>
+
+</div>
+
+<!-- DETAILS -->
+
+<div
+    class="overlay"
+    id="detailOverlay">
+
+    <div
+        class="modal"
+        id="detailModal">
+    </div>
+
+</div>
+
+<!-- DELETE -->
+
+<div
+    class="overlay"
+    id="deleteOverlay">
+
+    <div class="modal">
+
+        <h2>
+            🗑 Удалить запись?
+        </h2>
+
+        <div class="modal-sub">
+            Это действие нельзя отменить.
+        </div>
+
+        <div class="modal-actions">
+
+            <button
+                class="cancel"
+                onclick="cancelDelete()">
+                Отмена
+            </button>
+
+            <button
+                class="confirm"
+                style="background:#b93f59"
+                onclick="confirmDelete()">
+                Удалить
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div
+    class="toast"
+    id="toast">
+</div>
+
+<script>
+"use strict";
+
+/* ==================================================
+   SETTINGS
+================================================== */
+
+const PASSWORD = "2011M";
+
+const STUDY_STORAGE =
+    "myflow_study_v2";
+
+const DIARY_STORAGE =
+    "myflow_diary_v2";
+
+const SUBJECTS = [
+
+    ["Азербайджанский","🇦🇿"],
+
+    ["Английский","🇬🇧"],
+
+    ["Информатика","💻"],
+
+    ["Математика","🧮"],
+
+    ["Физика","⚛️"]
+
+];
+
+/*
+Все состояния дневника.
+Они используются и при заполнении,
+и на главной странице дневника.
+*/
+
+const DIARY_STATES = [
+
+    /* ЭМОЦИИ */
+
+    {
+        id:"mood",
+        name:"Настроение",
+        icon:"😊",
+        group:"main"
+    },
+
+    {
+        id:"energy",
+        name:"Энергия",
+        icon:"⚡",
+        group:"main"
+    },
+
+    {
+        id:"calm",
+        name:"Спокойствие",
+        icon:"😌",
+        group:"main"
+    },
+
+    {
+        id:"focus",
+        name:"Концентрация",
+        icon:"🎯",
+        group:"main"
+    },
+
+    {
+        id:"stress",
+        name:"Стресс",
+        icon:"😰",
+        group:"main"
+    },
+
+    {
+        id:"irritation",
+        name:"Раздражение",
+        icon:"😠",
+        group:"main"
+    },
+
+    {
+        id:"sadness",
+        name:"Грусть",
+        icon:"😔",
+        group:"main"
+    },
+
+    {
+        id:"confidence",
+        name:"Уверенность",
+        icon:"💪",
+        group:"main"
+    },
+
+    {
+        id:"sleepiness",
+        name:"Сонливость",
+        icon:"😴",
+        group:"main"
+    },
+
+    /* ЖЕЛАНИЯ */
+
+    {
+        id:"support",
+        name:"Хочется поддержки",
+        icon:"🤝",
+        group:"needs"
+    },
+
+    {
+        id:"tenderness",
+        name:"Хочется нежности",
+        icon:"🫂",
+        group:"needs"
+    },
+
+    {
+        id:"social",
+        name:"Хочется общения",
+        icon:"🗣️",
+        group:"needs"
+    },
+
+    {
+        id:"alone",
+        name:"Хочется побыть одному",
+        icon:"🌙",
+        group:"needs"
+    },
+
+    {
+        id:"rest",
+        name:"Хочется отдохнуть",
+        icon:"🎮",
+        group:"needs"
+    },
+
+    {
+        id:"sleep",
+        name:"Хочется поспать",
+        icon:"🛏️",
+        group:"needs"
+    },
+
+    {
+        id:"eat",
+        name:"Хочется поесть",
+        icon:"🍽️",
+        group:"needs"
+    },
+
+    {
+        id:"walk",
+        name:"Хочется прогуляться",
+        icon:"🚶",
+        group:"needs"
+    },
+
+    /* ФИЗИЧЕСКОЕ */
+
+    {
+        id:"hunger",
+        name:"Голод",
+        icon:"🍔",
+        group:"physical"
+    },
+
+    {
+        id:"thirst",
+        name:"Жажда",
+        icon:"💧",
+        group:"physical"
+    },
+
+    {
+        id:"tired",
+        name:"Физическая усталость",
+        icon:"🥱",
+        group:"physical"
+    },
+
+    {
+        id:"discomfort",
+        name:"Физический дискомфорт",
+        icon:"🤕",
+        group:"physical"
+    }
+
+];
+
+/* ==================================================
+   STORAGE
+================================================== */
+
+let storageWorks =
+    false;
+
+let memoryStudy = [];
+let memoryDiary = [];
+
+function testStorage(){
+
+    try{
+
+        const key =
+            "__myflow_test__";
+
+        localStorage.setItem(
+            key,
+            "1"
+        );
+
+        storageWorks =
+            localStorage.getItem(
+                key
+            ) === "1";
+
+        localStorage.removeItem(
+            key
+        );
+
+    }catch(error){
+
+        storageWorks =
+            false;
+    }
+
+}
+
+testStorage();
+
+function loadArray(
+    key,
+    memory
+){
+
+    if(!storageWorks){
+
+        return [
+            ...memory
+        ];
+    }
+
+    try{
+
+        const raw =
+            localStorage.getItem(
+                key
+            );
+
+        if(!raw){
+
+            return [];
+        }
+
+        const data =
+            JSON.parse(
+                raw
+            );
+
+        return Array.isArray(data)
+            ?
+            data
+            :
+            [];
+
+    }catch(error){
+
+        return [];
+    }
+
+}
+
+function saveArray(
+    key,
+    data,
+    type
+){
+
+    if(type === "study"){
+
+        memoryStudy =
+            JSON.parse(
+                JSON.stringify(data)
+            );
+
+    }else{
+
+        memoryDiary =
+            JSON.parse(
+                JSON.stringify(data)
+            );
+    }
+
+    if(!storageWorks){
+
+        return false;
+    }
+
+    try{
+
+        localStorage.setItem(
+            key,
+            JSON.stringify(data)
+        );
+
+        return true;
+
+    }catch(error){
+
+        storageWorks =
+            false;
+
+        return false;
+    }
+
+}
+
+let studyLessons =
+    loadArray(
+        STUDY_STORAGE,
+        memoryStudy
+    );
+
+let diaryEntries =
+    loadArray(
+        DIARY_STORAGE,
+        memoryDiary
+    );
+
+/* ==================================================
+   APP STATE
+================================================== */
+
+let admin =
+    false;
+
+let currentPage =
+    "study";
+
+let studyFilter =
+    "Все";
+
+let selectedSubject =
+    "Азербайджанский";
+
+let studyDate =
+    todayDate();
+
+let diaryDate =
+    todayDate();
+
+let calendarMode =
+    "study";
+
+let calendarMonth =
+    new Date();
+
+let deleteTarget =
+    null;
+
+/* ==================================================
+   HELPERS
+================================================== */
+
+function todayDate(){
+
+    const date =
+        new Date();
+
+    date.setHours(
+        0,0,0,0
+    );
+
+    return date;
+}
+
+function uid(){
+
+    return (
+        Date.now()
+        .toString(36)
+        +
+        Math.random()
+        .toString(36)
+        .slice(2)
+    );
+}
+
+function dateKey(date){
+
+    return (
+        date.getFullYear()
+        +
+        "-"
+        +
+        String(
+            date.getMonth()+1
+        ).padStart(2,"0")
+        +
+        "-"
+        +
+        String(
+            date.getDate()
+        ).padStart(2,"0")
+    );
+}
+
+function parseDate(value){
+
+    const [y,m,d] =
+        value
+        .split("-")
+        .map(Number);
+
+    return new Date(
+        y,
+        m-1,
+        d
+    );
+}
+
+function prettyDate(value){
+
+    const date =
+        typeof value === "string"
+        ?
+        parseDate(value)
+        :
+        value;
+
+    return date.toLocaleDateString(
+        "ru-RU",
+        {
+            day:"numeric",
+            month:"long",
+            year:"numeric"
+        }
+    );
+}
+
+function esc(value){
+
+    const div =
+        document.createElement(
+            "div"
+        );
+
+    div.textContent =
+        String(
+            value ?? ""
+        );
+
+    return div.innerHTML;
+}
+
+function score(value){
+
+    const number =
+        Number(value);
+
+    if(
+        !Number.isFinite(number)
+    ){
+
+        return "--";
+    }
+
+    return Number.isInteger(number)
+        ?
+        String(number)
+        :
+        number.toFixed(1);
+}
+
+function validScore(value){
+
+    if(value === ""){
+
+        return false;
+    }
+
+    const number =
+        Number(value);
+
+    return (
+        Number.isFinite(number)
+        &&
+        number >= 0
+        &&
+        number <= 10
+    );
+}
+
+function subjectIcon(name){
+
+    return (
+        SUBJECTS.find(
+            subject =>
+            subject[0] === name
+        )?.[1]
+        ||
+        "📘"
+    );
+}
+
+/* ==================================================
+   NAVIGATION
+================================================== */
+
+function switchPage(page){
+
+    currentPage =
+        page;
+
+    document.getElementById(
+        "studyPage"
+    ).classList.toggle(
+        "active",
+        page === "study"
+    );
+
+    document.getElementById(
+        "diaryPage"
+    ).classList.toggle(
+        "active",
+        page === "diary"
+    );
+
+    document.getElementById(
+        "studyTab"
+    ).classList.toggle(
+        "active",
+        page === "study"
+    );
+
+    document.getElementById(
+        "diaryTab"
+    ).classList.toggle(
+        "active",
+        page === "diary"
+    );
+
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
+}
+
+/* ==================================================
+   ADMIN
+================================================== */
+
+document.getElementById(
+    "adminBtn"
+).addEventListener(
+    "click",
+    ()=>{
+
+        if(admin){
+
+            const target =
+                currentPage === "study"
+                ?
+                "studyAdmin"
+                :
+                "diaryAdmin";
+
+            document.getElementById(
+                target
+            ).scrollIntoView({
+                behavior:"smooth"
+            });
+
+            return;
+        }
+
+        document.getElementById(
+            "passwordInput"
+        ).value = "";
+
+        document.getElementById(
+            "loginError"
+        ).textContent = "";
+
+        openOverlay(
+            "loginOverlay"
+        );
+    }
+);
+
+function login(){
+
+    const password =
+        document.getElementById(
+            "passwordInput"
+        ).value;
+
+    if(
+        password !== PASSWORD
+    ){
+
+        document.getElementById(
+            "loginError"
+        ).textContent =
+            "Неверный пароль";
+
+        return;
+    }
+
+    admin =
+        true;
+
+    document.getElementById(
+        "studyAdmin"
+    ).classList.add(
+        "show"
+    );
+
+    document.getElementById(
+        "diaryAdmin"
+    ).classList.add(
+        "show"
+    );
+
+    const adminButton =
+        document.getElementById(
+            "adminBtn"
+        );
+
+    adminButton.textContent =
+        "⚙️ Админ";
+
+    adminButton.classList.add(
+        "active"
+    );
+
+    document.getElementById(
+        "logoutBtn"
+    ).classList.add(
+        "show"
+    );
+
+    closeOverlay(
+        "loginOverlay"
+    );
+
+    toast(
+        "Админ-режим включён"
+    );
+
+    renderStudy();
+    renderDiary();
+}
+
+function logout(){
+
+    admin =
+        false;
+
+    document.getElementById(
+        "studyAdmin"
+    ).classList.remove(
+        "show"
+    );
+
+    document.getElementById(
+        "diaryAdmin"
+    ).classList.remove(
+        "show"
+    );
+
+    const adminButton =
+        document.getElementById(
+            "adminBtn"
+        );
+
+    adminButton.textContent =
+        "🔐 Админ";
+
+    adminButton.classList.remove(
+        "active"
+    );
+
+    document.getElementById(
+        "logoutBtn"
+    ).classList.remove(
+        "show"
+    );
+
+    closeOverlay(
+        "detailOverlay"
+    );
+
+    renderStudy();
+    renderDiary();
+
+    toast(
+        "Админ-режим выключен"
+    );
+}
+
+/* ==================================================
+   SUBJECT PICKER
+================================================== */
+
+function openSubjectPicker(){
+
+    document.getElementById(
+        "pickerHeading"
+    ).textContent =
+        "Выбери предмет";
+
+    document.getElementById(
+        "pickerSubtitle"
+    ).textContent =
+        "НОВЫЙ УРОК";
+
+    const box =
+        document.getElementById(
+            "pickerContent"
+        );
+
+    box.innerHTML = "";
+
+    SUBJECTS.forEach(
+        ([name,icon])=>{
+
+            const button =
+                document.createElement(
+                    "button"
+                );
+
+            button.className =
+                "picker-option";
+
+            button.innerHTML = `
+
+                <span class="picker-icon">
+                    ${icon}
+                </span>
+
+                <span>
+
+                    <div class="picker-title">
+                        ${esc(name)}
+                    </div>
+
+                    <div class="picker-sub">
+                        Добавить урок
+                    </div>
+
+                </span>
+
+            `;
+
+            button.onclick =
+                ()=>{
+
+                    selectedSubject =
+                        name;
+
+                    document.getElementById(
+                        "studySubjectText"
+                    ).textContent =
+                        name;
+
+                    document.getElementById(
+                        "studySubjectIcon"
+                    ).textContent =
+                        icon;
+
+                    closeOverlay(
+                        "pickerOverlay"
+                    );
+                };
+
+            box.appendChild(
+                button
+            );
+        }
+    );
+
+    openOverlay(
+        "pickerOverlay"
+    );
+}
+
+/* ==================================================
+   CALENDAR
+================================================== */
+
+function openCalendar(mode){
+
+    calendarMode =
+        mode;
+
+    const source =
+        mode === "study"
+        ?
+        studyDate
+        :
+        diaryDate;
+
+    calendarMonth =
+        new Date(
+            source.getFullYear(),
+            source.getMonth(),
+            1
+        );
+
+    renderCalendar();
+
+    openOverlay(
+        "calendarOverlay"
+    );
+}
+
+function moveMonth(amount){
+
+    calendarMonth =
+        new Date(
+            calendarMonth.getFullYear(),
+            calendarMonth.getMonth()
+            +
+            amount,
+            1
+        );
+
+    renderCalendar();
+}
+
+function sameDay(a,b){
+
+    return (
+        a.getFullYear()
+        ===
+        b.getFullYear()
+        &&
+        a.getMonth()
+        ===
+        b.getMonth()
+        &&
+        a.getDate()
+        ===
+        b.getDate()
+    );
+}
+
+function renderCalendar(){
+
+    document.getElementById(
+        "calendarTitle"
+    ).textContent =
+        calendarMonth.toLocaleDateString(
+            "ru-RU",
+            {
+                month:"long",
+                year:"numeric"
+            }
+        );
+
+    const box =
+        document.getElementById(
+            "calendarDays"
+        );
+
+    box.innerHTML = "";
+
+    const year =
+        calendarMonth.getFullYear();
+
+    const month =
+        calendarMonth.getMonth();
+
+    const first =
+        new Date(
+            year,
+            month,
+            1
+        );
+
+    const last =
+        new Date(
+            year,
+            month+1,
+            0
+        );
+
+    let offset =
+        first.getDay();
+
+    offset =
+        offset === 0
+        ?
+        6
+        :
+        offset-1;
+
+    for(
+        let i=0;
+        i<offset;
+        i++
+    ){
+
+        const blank =
+            document.createElement(
+                "div"
+            );
+
+        blank.className =
+            "day blank";
+
+        box.appendChild(
+            blank
+        );
+    }
+
+    const today =
+        todayDate();
+
+    const selected =
+        calendarMode === "study"
+        ?
+        studyDate
+        :
+        diaryDate;
+
+    for(
+        let day=1;
+        day<=last.getDate();
+        day++
+    ){
+
+        const date =
+            new Date(
+                year,
+                month,
+                day
+            );
+
+        const element =
+            document.createElement(
+                "div"
+            );
+
+        element.className =
+            "day";
+
+        element.textContent =
+            day;
+
+        if(
+            sameDay(
+                date,
+                today
+            )
+        ){
+
+            element.classList.add(
+                "today"
+            );
+        }
+
+        if(
+            sameDay(
+                date,
+                selected
+            )
+        ){
+
+            element.classList.add(
+                "selected"
+            );
+        }
+
+        element.onclick =
+            ()=>{
+
+                if(
+                    calendarMode ===
+                    "study"
+                ){
+
+                    studyDate =
+                        date;
+
+                    document.getElementById(
+                        "studyDateText"
+                    ).textContent =
+                        prettyDate(date);
+
+                }else{
+
+                    diaryDate =
+                        date;
+
+                    document.getElementById(
+                        "diaryDateText"
+                    ).textContent =
+                        prettyDate(date);
+                }
+
+                renderCalendar();
+            };
+
+        box.appendChild(
+            element
+        );
+    }
+}
+
+/* ==================================================
+   STUDY SAVE
+================================================== */
+
+function saveStudy(){
+
+    if(!admin){
+
+        toast(
+            "Сначала войди в админ"
+        );
+
+        return;
+    }
+
+    const rating =
+        document.getElementById(
+            "studyRating"
+        ).value;
+
+    const understanding =
+        document.getElementById(
+            "studyUnderstanding"
+        ).value;
+
+    const knowledge =
+        document.getElementById(
+            "studyKnowledge"
+        ).value;
+
+    if(
+        !validScore(rating)
+        ||
+        !validScore(understanding)
+        ||
+        !validScore(knowledge)
+    ){
+
+        toast(
+            "Заполни оценки от 0 до 10"
+        );
+
+        return;
+    }
+
+    const lesson = {
+
+        id:
+            uid(),
+
+        createdAt:
+            Date.now(),
+
+        date:
+            dateKey(
+                studyDate
+            ),
+
+        subject:
+            selectedSubject,
+
+        topic:
+            document.getElementById(
+                "studyTopic"
+            ).value.trim(),
+
+        rating:
+            Number(rating),
+
+        understanding:
+            Number(
+                understanding
+            ),
+
+        knowledge:
+            Number(
+                knowledge
+            ),
+
+        comment:
+            document.getElementById(
+                "studyComment"
+            ).value.trim()
+
+    };
+
+    studyLessons.push(
+        lesson
+    );
+
+    const saved =
+        saveArray(
+            STUDY_STORAGE,
+            studyLessons,
+            "study"
+        );
+
+    document.getElementById(
+        "studyTopic"
+    ).value = "";
+
+    document.getElementById(
+        "studyRating"
+    ).value = "";
+
+    document.getElementById(
+        "studyUnderstanding"
+    ).value = "";
+
+    document.getElementById(
+        "studyKnowledge"
+    ).value = "";
+
+    document.getElementById(
+        "studyComment"
+    ).value = "";
+
+    studyFilter =
+        "Все";
+
+    renderStudy();
+
+    toast(
+        saved
+        ?
+        "✓ Урок сохранён"
+        :
+        "✓ Урок добавлен"
+    );
+
+    setTimeout(
+        ()=>{
+
+            document.getElementById(
+                "studyHistoryHeading"
+            ).scrollIntoView({
+                behavior:"smooth"
+            });
+
+        },
+        150
+    );
+}
+
+/* ==================================================
+   STUDY RENDER
+================================================== */
+
+function renderStudy(){
+
+    renderStudyStats();
+
+    renderSubjects();
+
+    renderStudyFilters();
+
+    renderStudyHistory();
+}
+
+function renderStudyStats(){
+
+    document.getElementById(
+        "lessonCount"
+    ).textContent =
+        studyLessons.length;
+
+    if(
+        !studyLessons.length
+    ){
+
+        document.getElementById(
+            "avgKnowledge"
+        ).textContent =
+            "--";
+
+        document.getElementById(
+            "avgRating"
+        ).textContent =
+            "--";
+
+        return;
+    }
+
+    const knowledge =
+        studyLessons.reduce(
+            (sum,item)=>
+            sum
+            +
+            Number(
+                item.knowledge
+                ||
+                0
+            ),
+            0
+        )
+        /
+        studyLessons.length;
+
+    const rating =
+        studyLessons.reduce(
+            (sum,item)=>
+            sum
+            +
+            Number(
+                item.rating
+                ||
+                0
+            ),
+            0
+        )
+        /
+        studyLessons.length;
+
+    document.getElementById(
+        "avgKnowledge"
+    ).textContent =
+        score(knowledge)
+        +
+        "/10";
+
+    document.getElementById(
+        "avgRating"
+    ).textContent =
+        score(rating)
+        +
+        "/10";
+}
+
+function renderSubjects(){
+
+    const box =
+        document.getElementById(
+            "subjects"
+        );
+
+    box.innerHTML = "";
+
+    SUBJECTS.forEach(
+        ([name,icon])=>{
+
+            const data =
+                studyLessons
+                .filter(
+                    item =>
+                    item.subject
+                    ===
+                    name
+                )
+                .sort(
+                    (a,b)=>
+                    parseDate(a.date)
+                    -
+                    parseDate(b.date)
+                );
+
+            const latest =
+                data.length
+                ?
+                data[
+                    data.length-1
+                ]
+                :
+                null;
+
+            const card =
+                document.createElement(
+                    "div"
+                );
+
+            card.className =
+                "subject";
+
+            card.innerHTML = `
+
+                <div class="subject-head">
+
+                    <div class="subject-left">
+
+                        <div class="subject-icon">
+                            ${icon}
+                        </div>
+
+                        <div>
+
+                            <div class="subject-name">
+                                ${esc(name)}
+                            </div>
+
+                            <div class="subject-count">
+
+                                ${
+                                    data.length
+                                    ?
+                                    data.length
+                                    +
+                                    " уроков"
+                                    :
+                                    "Нет уроков"
+                                }
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="subject-score">
+
+                        ${
+                            latest
+                            ?
+                            score(
+                                latest.knowledge
+                            )
+                            +
+                            "/10"
+                            :
+                            "--"
+                        }
+
+                    </div>
+
+                </div>
+
+                <div class="track">
+
+                    <div
+                        class="fill"
+                        style="
+                            width:
+                            ${
+                                latest
+                                ?
+                                Number(
+                                    latest.knowledge
+                                )
+                                *
+                                10
+                                :
+                                0
+                            }%
+                        ">
+                    </div>
+
+                </div>
+
+            `;
+
+            card.onclick =
+                ()=>{
+
+                    studyFilter =
+                        name;
+
+                    renderStudyFilters();
+
+                    renderStudyHistory();
+
+                    document.getElementById(
+                        "studyHistoryHeading"
+                    ).scrollIntoView({
+                        behavior:"smooth"
+                    });
+                };
+
+            box.appendChild(
+                card
+            );
+        }
+    );
+}
+
+function renderStudyFilters(){
+
+    const box =
+        document.getElementById(
+            "studyFilters"
+        );
+
+    box.innerHTML = "";
+
+    const all = [
+
+        ["Все","✨"],
+
+        ...SUBJECTS
+
+    ];
+
+    all.forEach(
+        ([name,icon])=>{
+
+            const button =
+                document.createElement(
+                    "button"
+                );
+
+            button.className =
+                "filter"
+                +
+                (
+                    studyFilter
+                    ===
+                    name
+                    ?
+                    " active"
+                    :
+                    ""
+                );
+
+            button.textContent =
+                icon
+                +
+                " "
+                +
+                name;
+
+            button.onclick =
+                ()=>{
+
+                    studyFilter =
+                        name;
+
+                    renderStudyFilters();
+
+                    renderStudyHistory();
+                };
+
+            box.appendChild(
+                button
+            );
+        }
+    );
+}
+
+function renderStudyHistory(){
+
+    let data =
+        [
+            ...studyLessons
+        ];
+
+    if(
+        studyFilter !==
+        "Все"
+    ){
+
+        data =
+            data.filter(
+                item =>
+                item.subject
+                ===
+                studyFilter
+            );
+    }
+
+    data.sort(
+        (a,b)=>{
+
+            const difference =
+                parseDate(b.date)
+                -
+                parseDate(a.date);
+
+            return (
+                difference
+                ||
+                Number(
+                    b.createdAt
+                    ||
+                    0
+                )
+                -
+                Number(
+                    a.createdAt
+                    ||
+                    0
+                )
+            );
+        }
+    );
+
+    document.getElementById(
+        "studyHistoryCount"
+    ).textContent =
+        data.length
+        +
+        " записей";
+
+    const box =
+        document.getElementById(
+            "studyHistory"
+        );
+
+    box.innerHTML = "";
+
+    if(
+        !data.length
+    ){
+
+        box.innerHTML = `
+
+            <div class="empty">
+
+                📚
+
+                <br><br>
+
+                Пока нет уроков
+
+            </div>
+
+        `;
+
+        return;
+    }
+
+    data.forEach(
+        item=>{
+
+            const row =
+                document.createElement(
+                    "div"
+                );
+
+            row.className =
+                "history-item";
+
+            row.innerHTML = `
+
+                <div class="history-top">
+
+                    <div>
+
+                        <div class="history-name">
+
+                            ${subjectIcon(
+                                item.subject
+                            )}
+
+                            ${esc(
+                                item.subject
+                            )}
+
+                        </div>
+
+                        <div class="history-date">
+
+                            ${prettyDate(
+                                item.date
+                            )}
+
+                            ${
+                                item.topic
+                                ?
+                                " • "
+                                +
+                                esc(
+                                    item.topic
+                                )
+                                :
+                                ""
+                            }
+
+                        </div>
+
+                    </div>
+
+                    <div class="history-score">
+
+                        ${score(
+                            item.knowledge
+                        )}/10
+
+                    </div>
+
+                </div>
+
+                <div class="preview">
+
+                    ⭐ Урок
+                    ${score(
+                        item.rating
+                    )}/10
+
+                    · 🧠 Понимание
+                    ${score(
+                        item.understanding
+                    )}/10
+
+                    <br>
+
+                    Нажми, чтобы открыть полностью
+
+                </div>
+
+            `;
+
+            row.onclick =
+                ()=>openStudyDetails(
+                    item.id
+                );
+
+            box.appendChild(
+                row
+            );
+        }
+    );
+}
+
+/* ==================================================
+   STUDY DETAILS
+================================================== */
+
+function openStudyDetails(id){
+
+    const item =
+        studyLessons.find(
+            lesson =>
+            lesson.id === id
+        );
+
+    if(!item){
+
+        return;
+    }
+
+    document.getElementById(
+        "detailModal"
+    ).innerHTML = `
+
+        <h2>
+
+            ${subjectIcon(
+                item.subject
+            )}
+
+            ${esc(
+                item.subject
+            )}
+
+        </h2>
+
+        <div class="modal-sub">
+
+            ${prettyDate(
+                item.date
+            )}
+
+            ${
+                item.topic
+                ?
+                " • "
+                +
+                esc(
+                    item.topic
+                )
+                :
+                ""
+            }
+
+        </div>
+
+        <div class="detail-grid">
+
+            <div class="detail-box">
+
+                <span>
+                    ОБЩЕЕ ЗНАНИЕ
+                </span>
+
+                <strong>
+                    ${score(
+                        item.knowledge
+                    )}/10
+                </strong>
+
+            </div>
+
+            <div class="detail-box">
+
+                <span>
+                    ОЦЕНКА УРОКА
+                </span>
+
+                <strong>
+                    ${score(
+                        item.rating
+                    )}/10
+                </strong>
+
+            </div>
+
+            <div class="detail-box">
+
+                <span>
+                    ПОНИМАНИЕ
+                </span>
+
+                <strong>
+                    ${score(
+                        item.understanding
+                    )}/10
+                </strong>
+
+            </div>
+
+        </div>
+
+        ${
+            item.comment
+            ?
+            `
+
+            <div class="detail-text">
+
+                <b>
+                    КАК ПРОШЁЛ УРОК
+                </b>
+
+                ${esc(
+                    item.comment
+                )}
+
+            </div>
+
+            `
+            :
+            ""
+        }
+
+        <button
+            class="primary"
+            style="margin-top:11px"
+            onclick="closeOverlay('detailOverlay')">
+            Закрыть
+        </button>
+
+        ${
+            admin
+            ?
+            `
+
+            <button
+                class="delete"
+                onclick="askDelete('study','${item.id}')">
+                🗑 Удалить урок
+            </button>
+
+            `
+            :
+            ""
+        }
+
+    `;
+
+    openOverlay(
+        "detailOverlay"
+    );
+}
+
+/* ==================================================
+   DIARY SLIDERS
+================================================== */
+
+function buildDiarySliders(){
+
+    const targets = {
+
+        main:
+            document.getElementById(
+                "diaryMainStates"
+            ),
+
+        needs:
+            document.getElementById(
+                "diaryNeeds"
+            ),
+
+        physical:
+            document.getElementById(
+                "diaryPhysical"
+            )
+
+    };
+
+    Object.values(
+        targets
+    ).forEach(
+        element =>
+        element.innerHTML = ""
+    );
+
+    DIARY_STATES.forEach(
+        state=>{
+
+            const row =
+                document.createElement(
+                    "div"
+                );
+
+            row.className =
+                "slider-row";
+
+            row.innerHTML = `
+
+                <div class="slider-head">
+
+                    <span class="slider-name">
+
+                        ${state.icon}
+
+                        ${esc(
+                            state.name
+                        )}
+
+                    </span>
+
+                    <span
+                        class="slider-value"
+                        id="diaryValue_${state.id}">
+
+                        5/10
+
+                    </span>
+
+                </div>
+
+                <input
+                    type="range"
+                    id="diary_${state.id}"
+                    min="0"
+                    max="10"
+                    step="1"
+                    value="5"
+                >
+
+            `;
+
+            const slider =
+                row.querySelector(
+                    "input"
+                );
+
+            slider.oninput =
+                ()=>{
+
+                    document.getElementById(
+                        "diaryValue_"
+                        +
+                        state.id
+                    ).textContent =
+                        slider.value
+                        +
+                        "/10";
+                };
+
+            targets[
+                state.group
+            ].appendChild(
+                row
+            );
+        }
+    );
+}
+
+function diaryStateValues(){
+
+    const values = {};
+
+    DIARY_STATES.forEach(
+        state=>{
+
+            values[
+                state.id
+            ] =
+                Number(
+                    document.getElementById(
+                        "diary_"
+                        +
+                        state.id
+                    ).value
+                );
+        }
+    );
+
+    return values;
+}
+
+function resetDiaryForm(){
+
+    DIARY_STATES.forEach(
+        state=>{
+
+            const slider =
+                document.getElementById(
+                    "diary_"
+                    +
+                    state.id
+                );
+
+            slider.value =
+                5;
+
+            document.getElementById(
+                "diaryValue_"
+                +
+                state.id
+            ).textContent =
+                "5/10";
+        }
+    );
+
+    [
+
+        "dayText",
+        "thoughts",
+        "liked",
+        "upset",
+        "proud",
+        "freeText"
+
+    ].forEach(
+        id=>{
+
+            document.getElementById(
+                id
+            ).value = "";
+        }
+    );
+}
+
+/* ==================================================
+   SAVE DIARY
+================================================== */
+
+function saveDiary(){
+
+    if(!admin){
+
+        toast(
+            "Сначала войди в админ"
+        );
+
+        return;
+    }
+
+    const entry = {
+
+        id:
+            uid(),
+
+        createdAt:
+            Date.now(),
+
+        date:
+            dateKey(
+                diaryDate
+            ),
+
+        state:
+            diaryStateValues(),
+
+        dayText:
+            document.getElementById(
+                "dayText"
+            ).value.trim(),
+
+        thoughts:
+            document.getElementById(
+                "thoughts"
+            ).value.trim(),
+
+        liked:
+            document.getElementById(
+                "liked"
+            ).value.trim(),
+
+        upset:
+            document.getElementById(
+                "upset"
+            ).value.trim(),
+
+        proud:
+            document.getElementById(
+                "proud"
+            ).value.trim(),
+
+        freeText:
+            document.getElementById(
+                "freeText"
+            ).value.trim()
+
+    };
+
+    diaryEntries.push(
+        entry
+    );
+
+    const saved =
+        saveArray(
+            DIARY_STORAGE,
+            diaryEntries,
+            "diary"
+        );
+
+    resetDiaryForm();
+
+    renderDiary();
+
+    toast(
+        saved
+        ?
+        "🌙 День сохранён"
+        :
+        "🌙 Запись добавлена"
+    );
+
+    setTimeout(
+        ()=>{
+
+            window.scrollTo({
+                top:
+                    document.getElementById(
+                        "diaryOverview"
+                    ).offsetTop
+                    -
+                    90,
+
+                behavior:
+                    "smooth"
+            });
+
+        },
+        150
+    );
+}
+
+/* ==================================================
+   DIARY DASHBOARD
+================================================== */
+
+function renderDiary(){
+
+    const sorted =
+        [
+            ...diaryEntries
+        ].sort(
+            (a,b)=>{
+
+                const difference =
+                    parseDate(b.date)
+                    -
+                    parseDate(a.date);
+
+                return (
+                    difference
+                    ||
+                    Number(
+                        b.createdAt
+                        ||
+                        0
+                    )
+                    -
+                    Number(
+                        a.createdAt
+                        ||
+                        0
+                    )
+                );
+            }
+        );
+
+    renderDiaryOverview(
+        sorted
+    );
+
+    renderDiaryHistory(
+        sorted
+    );
+}
+
+function renderDiaryOverview(
+    sorted
+){
+
+    const box =
+        document.getElementById(
+            "diaryOverview"
+        );
+
+    if(
+        !sorted.length
+    ){
+
+        box.innerHTML = `
+
+            <div class="section-title">
+
+                <h3>
+                    🫀 Моё состояние
+                </h3>
+
+                <span>
+                    последняя запись
+                </span>
+
+            </div>
+
+            <div class="no-state">
+
+                🌙
+
+                <br><br>
+
+                Здесь появятся все твои
+                состояния и чувства после
+                первой записи в дневнике.
+
+            </div>
+
+            <div class="latest-info">
+
+                <span>
+                    📖 Записей
+                </span>
+
+                <strong>
+                    0
+                </strong>
+
+            </div>
+
+        `;
+
+        return;
+    }
+
+    const latest =
+        sorted[0];
+
+    const state =
+        latest.state
+        ||
+        {};
+
+    const mainStates =
+        DIARY_STATES.filter(
+            item =>
+            item.group ===
+            "main"
+        );
+
+    const needs =
+        DIARY_STATES.filter(
+            item =>
+            item.group ===
+            "needs"
+        );
+
+    const physical =
+        DIARY_STATES.filter(
+            item =>
+            item.group ===
+            "physical"
+        );
+
+    box.innerHTML = `
+
+        ${dashboardSection(
+            "🫀 Эмоции и состояние",
+            "как я себя чувствую",
+            mainStates,
+            state
+        )}
+
+        ${dashboardSection(
+            "❤️ Чего мне хочется",
+            "мои желания и потребности",
+            needs,
+            state
+        )}
+
+        ${dashboardSection(
+            "🧍 Физическое состояние",
+            "как чувствует себя тело",
+            physical,
+            state
+        )}
+
+        <div class="latest-info">
+
+            <span>
+
+                📅 Последняя запись
+
+                <br>
+
+                <strong>
+                    ${prettyDate(
+                        latest.date
+                    )}
+                </strong>
+
+            </span>
+
+            <span style="text-align:right">
+
+                📖 Всего записей
+
+                <br>
+
+                <strong>
+                    ${diaryEntries.length}
+                </strong>
+
+            </span>
+
+        </div>
+
+    `;
+}
+
+function dashboardSection(
+    title,
+    subtitle,
+    states,
+    values
+){
+
+    let cards = "";
+
+    states.forEach(
+        state=>{
+
+            const value =
+                values[
+                    state.id
+                ];
+
+            const display =
+                value === undefined
+                ?
+                "--"
+                :
+                score(value);
+
+            const width =
+                value === undefined
+                ?
+                0
+                :
+                Math.max(
+                    0,
+                    Math.min(
+                        100,
+                        Number(value)
+                        *
+                        10
+                    )
+                );
+
+            cards += `
+
+                <div class="state-card">
+
+                    <div class="state-card-top">
+
+                        <div class="state-card-icon">
+                            ${state.icon}
+                        </div>
+
+                        <div class="state-card-value">
+
+                            ${
+                                display
+                                ===
+                                "--"
+                                ?
+                                "--"
+                                :
+                                display
+                                +
+                                "/10"
+                            }
+
+                        </div>
+
+                    </div>
+
+                    <div class="state-card-name">
+
+                        ${esc(
+                            state.name
+                        )}
+
+                    </div>
+
+                    <div class="state-mini-track">
+
+                        <div
+                            class="state-mini-fill"
+                            style="
+                                width:
+                                ${width}%
+                            ">
+                        </div>
+
+                    </div>
+
+                </div>
+
+            `;
+        }
+    );
+
+    return `
+
+        <div class="section-title">
+
+            <h3>
+                ${title}
+            </h3>
+
+            <span>
+                ${subtitle}
+            </span>
+
+        </div>
+
+        <div class="state-dashboard">
+
+            ${cards}
+
+        </div>
+
+    `;
+}
+
+/* ==================================================
+   DIARY HISTORY
+================================================== */
+
+function renderDiaryHistory(
+    sorted
+){
+
+    document.getElementById(
+        "diaryHistoryLabel"
+    ).textContent =
+        sorted.length
+        +
+        " записей";
+
+    const box =
+        document.getElementById(
+            "diaryHistory"
+        );
+
+    box.innerHTML = "";
+
+    if(
+        !sorted.length
+    ){
+
+        box.innerHTML = `
+
+            <div class="empty">
+
+                🌙
+
+                <br><br>
+
+                Дневник пока пуст
+
+            </div>
+
+        `;
+
+        return;
+    }
+
+    sorted.forEach(
+        entry=>{
+
+            const state =
+                entry.state
+                ||
+                {};
+
+            const row =
+                document.createElement(
+                    "div"
+                );
+
+            row.className =
+                "diary-entry";
+
+            row.innerHTML = `
+
+                <div class="diary-entry-top">
+
+                    <div>
+
+                        <div class="diary-date">
+
+                            📅
+                            ${prettyDate(
+                                entry.date
+                            )}
+
+                        </div>
+
+                        <div class="history-date">
+
+                            ${
+                                entry.dayText
+                                ?
+                                esc(
+                                    entry.dayText
+                                    .slice(
+                                        0,
+                                        70
+                                    )
+                                )
+                                +
+                                (
+                                    entry.dayText.length
+                                    >
+                                    70
+                                    ?
+                                    "..."
+                                    :
+                                    ""
+                                )
+                                :
+                                "Запись состояния"
+                            }
+
+                        </div>
+
+                    </div>
+
+                    <div class="diary-feeling">
+
+                        ${moodEmoji(
+                            state.mood
+                        )}
+
+                    </div>
+
+                </div>
+
+                <div class="diary-values">
+
+                    <span class="chip">
+
+                        😊
+                        ${score(
+                            state.mood
+                        )}/10
+
+                    </span>
+
+                    <span class="chip">
+
+                        ⚡
+                        ${score(
+                            state.energy
+                        )}/10
+
+                    </span>
+
+                    <span class="chip">
+
+                        😰
+                        ${score(
+                            state.stress
+                        )}/10
+
+                    </span>
+
+                    <span class="chip">
+
+                        😌
+                        ${score(
+                            state.calm
+                        )}/10
+
+                    </span>
+
+                </div>
+
+            `;
+
+            row.onclick =
+                ()=>openDiaryDetails(
+                    entry.id
+                );
+
+            box.appendChild(
+                row
+            );
+        }
+    );
+}
+
+function moodEmoji(value){
+
+    const number =
+        Number(value);
+
+    if(
+        !Number.isFinite(number)
+    ){
+
+        return "🌙";
+    }
+
+    if(number >= 8){
+
+        return "😄";
+    }
+
+    if(number >= 6){
+
+        return "😊";
+    }
+
+    if(number >= 4){
+
+        return "😐";
+    }
+
+    if(number >= 2){
+
+        return "😔";
+    }
+
+    return "😞";
+}
+
+/* ==================================================
+   DIARY DETAILS
+================================================== */
+
+function openDiaryDetails(id){
+
+    const entry =
+        diaryEntries.find(
+            item =>
+            item.id === id
+        );
+
+    if(!entry){
+
+        return;
+    }
+
+    const state =
+        entry.state
+        ||
+        {};
+
+    let chips = "";
+
+    DIARY_STATES.forEach(
+        item=>{
+
+            if(
+                state[
+                    item.id
+                ]
+                !==
+                undefined
+            ){
+
+                chips += `
+
+                    <span class="chip">
+
+                        ${item.icon}
+
+                        ${esc(
+                            item.name
+                        )}
+
+                        ${score(
+                            state[
+                                item.id
+                            ]
+                        )}/10
+
+                    </span>
+
+                `;
+            }
+        }
+    );
+
+    function textBlock(
+        title,
+        value
+    ){
+
+        if(!value){
+
+            return "";
+        }
+
+        return `
+
+            <div class="detail-text">
+
+                <b>
+                    ${title}
+                </b>
+
+                ${esc(value)}
+
+            </div>
+
+        `;
+    }
+
+    document.getElementById(
+        "detailModal"
+    ).innerHTML = `
+
+        <h2>
+
+            ${moodEmoji(
+                state.mood
+            )}
+
+            ${prettyDate(
+                entry.date
+            )}
+
+        </h2>
+
+        <div class="modal-sub">
+            Моя запись дня
+        </div>
+
+        <div class="detail-grid">
+
+            <div class="detail-box">
+
+                <span>
+                    НАСТРОЕНИЕ
+                </span>
+
+                <strong>
+                    ${score(
+                        state.mood
+                    )}/10
+                </strong>
+
+            </div>
+
+            <div class="detail-box">
+
+                <span>
+                    ЭНЕРГИЯ
+                </span>
+
+                <strong>
+                    ${score(
+                        state.energy
+                    )}/10
+                </strong>
+
+            </div>
+
+            <div class="detail-box">
+
+                <span>
+                    СТРЕСС
+                </span>
+
+                <strong>
+                    ${score(
+                        state.stress
+                    )}/10
+                </strong>
+
+            </div>
+
+            <div class="detail-box">
+
+                <span>
+                    СПОКОЙСТВИЕ
+                </span>
+
+                <strong>
+                    ${score(
+                        state.calm
+                    )}/10
+                </strong>
+
+            </div>
+
+        </div>
+
+        <div
+            class="diary-values"
+            style="margin-top:12px">
+
+            ${chips}
+
+        </div>
+
+        ${textBlock(
+            "🌙 КАК ПРОШЁЛ ДЕНЬ",
+            entry.dayText
+        )}
+
+        ${textBlock(
+            "💭 ЧТО У МЕНЯ В ГОЛОВЕ",
+            entry.thoughts
+        )}
+
+        ${textBlock(
+            "❤️ ЧТО ПОНРАВИЛОСЬ",
+            entry.liked
+        )}
+
+        ${textBlock(
+            "💢 ЧТО РАССТРОИЛО",
+            entry.upset
+        )}
+
+        ${textBlock(
+            "🏆 ЧЕМ Я ДОВОЛЕН",
+            entry.proud
+        )}
+
+        ${textBlock(
+            "📝 СВОБОДНАЯ ЗАПИСЬ",
+            entry.freeText
+        )}
+
+        <button
+            class="primary"
+            style="margin-top:11px"
+            onclick="closeOverlay('detailOverlay')">
+            Закрыть
+        </button>
+
+        ${
+            admin
+            ?
+            `
+
+            <button
+                class="delete"
+                onclick="askDelete('diary','${entry.id}')">
+                🗑 Удалить запись
+            </button>
+
+            `
+            :
+            ""
+        }
+
+    `;
+
+    openOverlay(
+        "detailOverlay"
+    );
+}
+
+/* ==================================================
+   DELETE
+================================================== */
+
+function askDelete(
+    type,
+    id
+){
+
+    deleteTarget = {
+        type,
+        id
+    };
+
+    closeOverlay(
+        "detailOverlay"
+    );
+
+    openOverlay(
+        "deleteOverlay"
+    );
+}
+
+function cancelDelete(){
+
+    deleteTarget =
+        null;
+
+    closeOverlay(
+        "deleteOverlay"
+    );
+}
+
+function confirmDelete(){
+
+    if(
+        !deleteTarget
+        ||
+        !admin
+    ){
+
+        return;
+    }
+
+    if(
+        deleteTarget.type
+        ===
+        "study"
+    ){
+
+        studyLessons =
+            studyLessons.filter(
+                item =>
+                item.id
+                !==
+                deleteTarget.id
+            );
+
+        saveArray(
+            STUDY_STORAGE,
+            studyLessons,
+            "study"
+        );
+
+        renderStudy();
+    }
+
+    if(
+        deleteTarget.type
+        ===
+        "diary"
+    ){
+
+        diaryEntries =
+            diaryEntries.filter(
+                item =>
+                item.id
+                !==
+                deleteTarget.id
+            );
+
+        saveArray(
+            DIARY_STORAGE,
+            diaryEntries,
+            "diary"
+        );
+
+        renderDiary();
+    }
+
+    deleteTarget =
+        null;
+
+    closeOverlay(
+        "deleteOverlay"
+    );
+
+    toast(
+        "Запись удалена"
+    );
+}
+
+/* ==================================================
+   OVERLAYS
+================================================== */
+
+function openOverlay(id){
+
+    document.getElementById(
+        id
+    ).classList.add(
+        "show"
+    );
+}
+
+function closeOverlay(id){
+
+    document.getElementById(
+        id
+    ).classList.remove(
+        "show"
+    );
+}
+
+[
+    "loginOverlay",
+    "pickerOverlay",
+    "calendarOverlay",
+    "detailOverlay"
+
+].forEach(
+    id=>{
+
+        document.getElementById(
+            id
+        ).addEventListener(
+            "click",
+            event=>{
+
+                if(
+                    event.target.id
+                    ===
+                    id
+                ){
+
+                    closeOverlay(
+                        id
+                    );
+                }
+            }
+        );
+    }
+);
+
+document.getElementById(
+    "deleteOverlay"
+).addEventListener(
+    "click",
+    event=>{
+
+        if(
+            event.target.id
+            ===
+            "deleteOverlay"
+        ){
+
+            cancelDelete();
+        }
+    }
+);
+
+document.getElementById(
+    "passwordInput"
+).addEventListener(
+    "keydown",
+    event=>{
+
+        if(
+            event.key ===
+            "Enter"
+        ){
+
+            login();
+        }
+    }
+);
+
+/* ==================================================
+   TOAST
+================================================== */
+
+let toastTimer;
+
+function toast(message){
+
+    const element =
+        document.getElementById(
+            "toast"
+        );
+
+    element.textContent =
+        message;
+
+    element.classList.add(
+        "show"
+    );
+
+    clearTimeout(
+        toastTimer
+    );
+
+    toastTimer =
+        setTimeout(
+            ()=>{
+
+                element.classList.remove(
+                    "show"
+                );
+
+            },
+            2200
+        );
+}
+
+/* ==================================================
+   START
+================================================== */
+
+buildDiarySliders();
+
+document.getElementById(
+    "studyDateText"
+).textContent =
+    prettyDate(
+        studyDate
+    );
+
+document.getElementById(
+    "diaryDateText"
+).textContent =
+    prettyDate(
+        diaryDate
+    );
+
+renderStudy();
+
+renderDiary();
+
+</script>
+
+</body>
+</html>
